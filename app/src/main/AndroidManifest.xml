@@ -28,6 +28,22 @@
             android:name="edu.gatech.travel.AchievementList"
             android:label="@string/title_activity_achievement_list" >
         </activity>
+        <activity
+            android:name="edu.gatech.travel.ViewListActivity"
+            android:label="@string/title_activity_view_list" >
+        </activity>
+        <activity
+            android:name="edu.gatech.travel.ViewIndividualList"
+            android:label="@string/title_activity_view_individual_list" >
+        </activity>
+        <activity
+            android:name="edu.gatech.travel.CompleteAchievement"
+            android:label="@string/title_activity_complete_achievement" >
+        </activity>
+        <activity
+            android:name="edu.gatech.travel.ViewIndividualAchievement"
+            android:label="@string/title_activity_view_individual_achievement" >
+        </activity>
     </application>
 
 </manifest>

@@ -7,5 +7,9 @@
     <string name="title_activity_upload">UploadActivity</string>
     <string name="title_activity_select_list">SelectList</string>
     <string name="title_activity_achievement_list">AchievementList</string>
+    <string name="title_activity_view_list">ViewListActivity</string>
+    <string name="title_activity_view_individual_list">ViewIndividualList</string>
+    <string name="title_activity_complete_achievement">CompleteAchievement</string>
+    <string name="title_activity_view_individual_achievement">ViewIndividualAchievement</string>
 
 </resources>

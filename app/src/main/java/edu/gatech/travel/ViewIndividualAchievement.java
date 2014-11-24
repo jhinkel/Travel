@@ -8,26 +8,24 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class MainActivity extends Activity {
+public class ViewIndividualAchievement extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_view_individual_achievement);
     }
-    public void onUploadClick(View v){
-        startActivity(new Intent(getApplicationContext(),UploadActivity.class));
-    }
-    public void onViewClick(View v){
-        startActivity(new Intent(getApplicationContext(),ViewListActivity.class));
-    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_view_individual_achievement, menu);
         return true;
     }
-
+    public void onActivityCompleteClick(View v){
+        startActivity(new Intent(getApplicationContext(),CompleteAchievement.class));
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
