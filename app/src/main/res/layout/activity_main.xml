@@ -12,7 +12,8 @@
         android:id="@+id/btnUpload"
         android:layout_marginBottom="71dp"
         android:layout_above="@+id/btnDownload"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="onUploadClick" />
 
     <Button
         android:layout_width="wrap_content"
