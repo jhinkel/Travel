@@ -1,30 +1,24 @@
 package edu.gatech.travel;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 
-public class UploadActivity extends Activity {
+public class AchievementList extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
+        setContentView(R.layout.activity_achievement_list);
     }
-    public void onEditClick(View v){
-        startActivity(new Intent(getApplicationContext(),SelectList.class));
-    }
-    public void onAddClick(View v){
-        startActivity(new Intent(getApplicationContext(),AchievementList.class));
-    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_upload, menu);
+        getMenuInflater().inflate(R.menu.menu_achievement_list, menu);
         return true;
     }
 

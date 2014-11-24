@@ -8,26 +8,24 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class UploadActivity extends Activity {
+public class SelectList extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upload);
+        setContentView(R.layout.activity_select_list);
     }
-    public void onEditClick(View v){
-        startActivity(new Intent(getApplicationContext(),SelectList.class));
-    }
-    public void onAddClick(View v){
-        startActivity(new Intent(getApplicationContext(),AchievementList.class));
-    }
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_upload, menu);
+        getMenuInflater().inflate(R.menu.menu_select_list, menu);
         return true;
     }
-
+    public void onActivityListClick(View v){
+        startActivity(new Intent(getApplicationContext(),AchievementList.class));
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

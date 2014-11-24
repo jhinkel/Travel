@@ -20,6 +20,14 @@
             android:name="edu.gatech.travel.UploadActivity"
             android:label="@string/title_activity_upload" >
         </activity>
+        <activity
+            android:name="edu.gatech.travel.SelectList"
+            android:label="@string/title_activity_select_list" >
+        </activity>
+        <activity
+            android:name="edu.gatech.travel.AchievementList"
+            android:label="@string/title_activity_achievement_list" >
+        </activity>
     </application>
 
 </manifest>
