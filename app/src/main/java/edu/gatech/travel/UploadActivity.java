@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+
+import java.util.HashMap;
 
 
 public class UploadActivity extends Activity {
-
+    // DB Class to perform DB related operations
+    DBController controller = new DBController(this);
+    HashMap<String, String> queryValues;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,7 +24,18 @@ public class UploadActivity extends Activity {
         startActivity(new Intent(getApplicationContext(),SelectList.class));
     }
     public void onAddClick(View v){
-        startActivity(new Intent(getApplicationContext(),AchievementList.class));
+        View parentView = (View) v.getParent();
+        EditText title = (EditText) parentView.findViewById(R.id.tfTitle);
+        EditText description = (EditText) parentView.findViewById(R.id.tfDescription);
+
+
+        queryValues.put("title", title.getText().toString());
+        queryValues.put("description", description.getText().toString());
+        queryValues.put("latitude", "0");
+        queryValues.put("longitude", "0");
+        queryValues.put("achievements", "");
+        controller.insertList(queryValues);
+        startActivity(new Intent(getApplicationContext(), AchievementList.class));
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
