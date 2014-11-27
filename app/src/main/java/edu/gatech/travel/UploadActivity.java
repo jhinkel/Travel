@@ -7,6 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import java.util.HashMap;
 
@@ -14,7 +19,7 @@ import java.util.HashMap;
 public class UploadActivity extends Activity {
     // DB Class to perform DB related operations
     DBController controller = new DBController(this);
-    HashMap<String, String> queryValues;
+    HashMap<String, String> queryValues = new HashMap<String, String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +40,7 @@ public class UploadActivity extends Activity {
         queryValues.put("longitude", "0");
         queryValues.put("achievements", "");
         controller.insertList(queryValues);
+
         startActivity(new Intent(getApplicationContext(), AchievementList.class));
     }
     @Override
@@ -57,5 +63,20 @@ public class UploadActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void syncSQLiteMySQLDBList( HashMap<String, String> listvals) {
+        // Create AsycHttpClient object
+        AsyncHttpClient client = new AsyncHttpClient();
+        // Http Request Params Object
+        RequestParams params = new RequestParams();
+        params.put("title",listvals.get("title"));
+        params.put("description",listvals.get("description"));
+        params.put("latitude",listvals.get("latitude"));
+        params.put("longitude",listvals.get("longitude"));
+        params.put("achievements",listvals.get("achievements"));
+
+        client.post("http://www.johnhinkel.com/sqlitemysqlsync/insertList.php", params, new AsyncHttpResponseHandler() {
+
+        });
     }
 }

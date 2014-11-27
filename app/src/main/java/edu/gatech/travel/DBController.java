@@ -21,8 +21,8 @@ public class DBController  extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         String query;
         String query2;
-        query = "CREATE TABLE lists(ID integer NOT NULL AUTO_INCREMENT, title varchar(50), description varchar(500), latitude varchar(500), longitude varchar(500), achievementids varchar(1000), PRIMARY KEY(ID))";
-        query2 = "CREATE TABLE achievements(ID integer NOT NULL AUTO_INCREMENT, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), PRIMARY KEY(ID))";
+        query = "CREATE TABLE lists(ID integer NOT NULL, title varchar(50), description varchar(500), latitude varchar(500), longitude varchar(500), achievementids varchar(1000), PRIMARY KEY(ID))";
+        query2 = "CREATE TABLE achievements(ID integer NOT NULL, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), PRIMARY KEY(ID))";
         database.execSQL(query);
         database.execSQL(query2);
     }
