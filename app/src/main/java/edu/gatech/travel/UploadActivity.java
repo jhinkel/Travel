@@ -57,7 +57,7 @@ public class UploadActivity extends Activity {
         queryValues.put("longitude", "0");
         queryValues.put("achievements", "");
         controller.insertList(queryValues);
-
+        syncSQLiteMySQLDBList(queryValues);
         startActivity(new Intent(getApplicationContext(), AchievementList.class));
     }
     @Override
@@ -82,25 +82,16 @@ public class UploadActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
     public void syncSQLiteMySQLDBList( HashMap<String, String> listvals) {
-        HttpClient httpclient = new DefaultHttpClient();
-// specify the URL you want to post to
-        HttpPost httppost = new HttpPost("http://www.johnhinkel.com/sqlitemysqlsync/insertList.php");
-        try {
-// create a list to store HTTP variables and their values
-            List nameValuePairs = new ArrayList();
-// add an HTTP variable and value pair
-            nameValuePairs.add(new BasicNameValuePair("title", listvals.get("title")));
-            nameValuePairs.add(new BasicNameValuePair("description", listvals.get("title")));
-            nameValuePairs.add(new BasicNameValuePair("latitude", listvals.get("title")));
-            nameValuePairs.add(new BasicNameValuePair("longitude", listvals.get("title")));
-            nameValuePairs.add(new BasicNameValuePair("achievements", listvals.get("title")));
-            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-// send the variable and value, in other words post, to the URL
-            HttpResponse response = httpclient.execute(httppost);
-        } catch (ClientProtocolException e) {
-// process execption
-        } catch (IOException e) {
-// process execption
-        }
+        // Create AsycHttpClient object
+        AsyncHttpClient client = new AsyncHttpClient();
+// Http Request Params Object
+        RequestParams params = new RequestParams();
+        params.put("title",listvals.get("title"));
+        params.put("description",listvals.get("description"));
+        params.put("latitude",listvals.get("latitude"));
+        params.put("longitude",listvals.get("longitude"));
+        params.put("achievements",listvals.get("achievements"));
+        client.post("http://www.johnhinkel.com/sqlitemysqlsync/insertList.php", params, new AsyncHttpResponseHandler() {
+        });
     }
 }
