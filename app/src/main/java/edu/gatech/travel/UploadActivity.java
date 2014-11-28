@@ -13,7 +13,24 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 
 public class UploadActivity extends Activity {
@@ -65,18 +82,25 @@ public class UploadActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
     public void syncSQLiteMySQLDBList( HashMap<String, String> listvals) {
-        // Create AsycHttpClient object
-        AsyncHttpClient client = new AsyncHttpClient();
-        // Http Request Params Object
-        RequestParams params = new RequestParams();
-        params.put("title",listvals.get("title"));
-        params.put("description",listvals.get("description"));
-        params.put("latitude",listvals.get("latitude"));
-        params.put("longitude",listvals.get("longitude"));
-        params.put("achievements",listvals.get("achievements"));
-
-        client.post("http://www.johnhinkel.com/sqlitemysqlsync/insertList.php", params, new AsyncHttpResponseHandler() {
-
-        });
+        HttpClient httpclient = new DefaultHttpClient();
+// specify the URL you want to post to
+        HttpPost httppost = new HttpPost("http://www.johnhinkel.com/sqlitemysqlsync/insertList.php");
+        try {
+// create a list to store HTTP variables and their values
+            List nameValuePairs = new ArrayList();
+// add an HTTP variable and value pair
+            nameValuePairs.add(new BasicNameValuePair("title", listvals.get("title")));
+            nameValuePairs.add(new BasicNameValuePair("description", listvals.get("title")));
+            nameValuePairs.add(new BasicNameValuePair("latitude", listvals.get("title")));
+            nameValuePairs.add(new BasicNameValuePair("longitude", listvals.get("title")));
+            nameValuePairs.add(new BasicNameValuePair("achievements", listvals.get("title")));
+            httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+// send the variable and value, in other words post, to the URL
+            HttpResponse response = httpclient.execute(httppost);
+        } catch (ClientProtocolException e) {
+// process execption
+        } catch (IOException e) {
+// process execption
+        }
     }
 }
