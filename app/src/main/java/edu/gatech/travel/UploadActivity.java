@@ -1,7 +1,10 @@
 package edu.gatech.travel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -46,19 +49,34 @@ public class UploadActivity extends Activity {
         startActivity(new Intent(getApplicationContext(),SelectList.class));
     }
     public void onAddClick(View v){
-        View parentView = (View) v.getParent();
-        EditText title = (EditText) parentView.findViewById(R.id.tfTitle);
-        EditText description = (EditText) parentView.findViewById(R.id.tfDescription);
+        ConnectivityManager conMan = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+//mobile
+        NetworkInfo.State mobile = conMan.getNetworkInfo(0).getState();
+
+//wifi
+        NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState();
+        //Ensures database syncing since you can't add records without an internet connection
+        if (mobile == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED) {
 
 
-        queryValues.put("title", title.getText().toString());
-        queryValues.put("description", description.getText().toString());
-        queryValues.put("latitude", "0");
-        queryValues.put("longitude", "0");
-        queryValues.put("achievements", "");
-        controller.insertList(queryValues);
-        syncSQLiteMySQLDBList(queryValues);
-        startActivity(new Intent(getApplicationContext(), AchievementList.class));
+            View parentView = (View) v.getParent();
+            EditText title = (EditText) parentView.findViewById(R.id.tfTitle);
+            EditText description = (EditText) parentView.findViewById(R.id.tfDescription);
+
+
+            queryValues.put("title", title.getText().toString());
+            queryValues.put("description", description.getText().toString());
+            queryValues.put("latitude", "0");
+            queryValues.put("longitude", "0");
+            queryValues.put("achievements", "");
+            controller.insertList(queryValues);
+            syncSQLiteMySQLDBList(queryValues);
+            startActivity(new Intent(getApplicationContext(), AchievementList.class));
+        }
+        else{
+
+        }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
