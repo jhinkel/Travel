@@ -8,6 +8,15 @@ package edu.gatech.travel;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
         import android.database.sqlite.SQLiteOpenHelper;
+        import android.widget.Toast;
+
+        import com.loopj.android.http.AsyncHttpClient;
+        import com.loopj.android.http.AsyncHttpResponseHandler;
+        import com.loopj.android.http.RequestParams;
+
+        import org.json.JSONArray;
+        import org.json.JSONException;
+        import org.json.JSONObject;
 
 
 public class DBController  extends SQLiteOpenHelper {
@@ -78,6 +87,38 @@ public class DBController  extends SQLiteOpenHelper {
         }
         database.close();
         return ListOfLists;
+    }
+
+    //
+    public void syncDatabases(){
+        // Create AsycHttpClient object
+        AsyncHttpClient client = new AsyncHttpClient();
+// Http Request Params Object
+        RequestParams params = new RequestParams();
+        client.post("http://192.168.2.4:9000/sqlitemysqlsync/viewList.php",params ,new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(String response) {
+                System.out.println(response);
+                //CLEAR LISTS SQLITE TABLE AND INSERT SERVER RESPONSE INTO CLEARED TABLE
+                try {
+                    JSONArray arr = new JSONArray(response);
+                    System.out.println(arr.length());
+                    for(int i=0; i<arr.length();i++){
+                        JSONObject obj = (JSONObject)arr.get(i);
+                        System.out.println(obj.get("id"));
+                        System.out.println(obj.get("status"));
+
+                    }
+
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+
+                    e.printStackTrace();
+                }
+            }
+
+
+        });
     }
 
 }
