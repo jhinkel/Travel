@@ -89,17 +89,28 @@ public class DBController  extends SQLiteOpenHelper {
         return ListOfLists;
     }
 
-    //
+
     public void syncDatabases(){
         // Create AsycHttpClient object
         AsyncHttpClient client = new AsyncHttpClient();
-// Http Request Params Object
+        // Http Request Params Object
+        final SQLiteDatabase database = this.getWritableDatabase();
         RequestParams params = new RequestParams();
-        client.post("http://192.168.2.4:9000/sqlitemysqlsync/viewList.php",params ,new AsyncHttpResponseHandler() {
+        client.post("http://www.johnhinkel.com/sqlitemysqlsync/viewList.php",params ,new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(String response) {
                 System.out.println(response);
                 //CLEAR LISTS SQLITE TABLE AND INSERT SERVER RESPONSE INTO CLEARED TABLE
+                String query;
+                String query2;
+                query = "DROP TABLE IF EXISTS lists";
+                query2 = "DROP TABLE IF EXISTS achievements";
+
+                database.execSQL(query);
+                database.execSQL(query2);
+                onCreate(database);
+
+                //insert data back into tables;
                 try {
                     JSONArray arr = new JSONArray(response);
                     System.out.println(arr.length());
@@ -107,6 +118,13 @@ public class DBController  extends SQLiteOpenHelper {
                         JSONObject obj = (JSONObject)arr.get(i);
                         System.out.println(obj.get("id"));
                         System.out.println(obj.get("status"));
+                        HashMap<String, String> queryValues = new HashMap<String, String>();
+                        queryValues.put("title", obj.get("title").toString());
+                        queryValues.put("description", obj.get("description").toString());
+                        queryValues.put("latitude", obj.get("latitude").toString());
+                        queryValues.put("longitude", obj.get("longitude").toString());
+                        queryValues.put("achievements", obj.get("achievements").toString());
+                        insertList(queryValues);
 
                     }
 
@@ -116,9 +134,20 @@ public class DBController  extends SQLiteOpenHelper {
                     e.printStackTrace();
                 }
             }
+            public void onFailure(int statusCode, Throwable error,
+                                  String content) {
+                // TODO Auto-generated method stub
+
+                System.out.println("FAIL");
+
+            }
+
 
 
         });
+        Cursor cursor = database.rawQuery("select * from lists", null);
+
+        System.out.println(cursor.getCount());
     }
 
 }

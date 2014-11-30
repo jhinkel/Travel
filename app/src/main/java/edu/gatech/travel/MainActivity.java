@@ -9,11 +9,12 @@ import android.view.View;
 
 
 public class MainActivity extends Activity {
-
+    DBController controller = new DBController(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        controller.syncDatabases();
     }
     public void onUploadClick(View v){
         startActivity(new Intent(getApplicationContext(),UploadActivity.class));
