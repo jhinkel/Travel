@@ -145,9 +145,6 @@ public class DBController  extends SQLiteOpenHelper {
 
 
         });
-        Cursor cursor = database.rawQuery("select * from lists", null);
-
-        System.out.println(cursor.getCount());
     }
 
 }
