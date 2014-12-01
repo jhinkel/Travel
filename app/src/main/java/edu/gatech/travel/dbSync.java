@@ -26,9 +26,15 @@ import java.util.HashMap;
 /**
  * Created by John B. Hinkel III on 11/30/2014.
  */
-public class dbSync extends AsyncTask<URL,Void,String> {
+class dbSync extends AsyncTask<URL,Void,String> {
     String responseStr = "";
     public String retStr = "";
+
+    private AsyncResponse delegate;
+
+    public dbSync(AsyncResponse listener){
+        delegate = listener;
+    }
     protected String doInBackground(URL... urls) {
         HttpClient httpclient;
         HttpGet request;
@@ -73,8 +79,9 @@ public class dbSync extends AsyncTask<URL,Void,String> {
     protected void onPostExecute(String result) {
         if(result != null || result != "error") {
             Log.e("AsyncTask", result);
-
+            responseStr = result;
         }
+        delegate.processFinish(result);
 
 
     }

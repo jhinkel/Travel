@@ -14,13 +14,13 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        controller.syncDatabases();
+
     }
     public void onUploadClick(View v){
         startActivity(new Intent(getApplicationContext(),UploadActivity.class));
     }
     public void onViewClick(View v){
-        startActivity(new Intent(getApplicationContext(),ViewListActivity.class));
+        controller.syncDatabases();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

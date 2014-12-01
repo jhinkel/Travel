@@ -19,13 +19,14 @@ package edu.gatech.travel;
         import com.loopj.android.http.JsonHttpResponseHandler;
         import com.loopj.android.http.RequestParams;
 
+
         import org.json.JSONArray;
         import org.json.JSONException;
         import org.json.JSONObject;
 
 
-public class DBController  extends SQLiteOpenHelper {
-
+public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
+    dbSync syncResult = new dbSync(this);
     public DBController(Context applicationcontext) {
         super(applicationcontext, "user.db", null, 1);
     }
@@ -39,6 +40,7 @@ public class DBController  extends SQLiteOpenHelper {
         query2 = "CREATE TABLE achievements(ID integer NOT NULL, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), PRIMARY KEY(ID))";
         database.execSQL(query);
         database.execSQL(query2);
+
     }
     @Override
     public void onUpgrade(SQLiteDatabase database, int version_old, int current_version) {
@@ -124,14 +126,18 @@ public class DBController  extends SQLiteOpenHelper {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        dbSync syncResult = new dbSync();
+
 
         ArrayList<HashMap<String, String>> retMap = null;
 
             syncResult.execute(viewListURL);
+        Log.e("TEST",syncResult.responseStr);
 
 
 
     }
-
+    public void processFinish(String output){
+       final SQLiteDatabase database = this.getWritableDatabase();
+       Log.e("PROCESS FINISHED",output);
+    }
 }
