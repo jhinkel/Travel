@@ -1,32 +1,32 @@
 package edu.gatech.travel;
 
-        import java.net.MalformedURLException;
-        import java.net.URL;
-        import java.util.ArrayList;
-        import java.util.HashMap;
-        import java.util.concurrent.ExecutionException;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
-        import android.content.ContentValues;
-        import android.content.Context;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.database.sqlite.SQLiteOpenHelper;
-        import android.util.Log;
-        import android.widget.Toast;
-        /*
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/*
         import com.loopj.android.http.AsyncHttpClient;
         import com.loopj.android.http.AsyncHttpResponseHandler;
         import com.loopj.android.http.JsonHttpResponseHandler;
         import com.loopj.android.http.RequestParams;
         */
 
-        import org.json.JSONArray;
-        import org.json.JSONException;
-        import org.json.JSONObject;
 
-
-public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
+public class DBController  extends SQLiteOpenHelper implements AsyncResponse, AsyncResponse2{
     dbSync syncResult = new dbSync(this);
+    dbSync2 syncResult2 = new dbSync2(this);
     public DBController(Context applicationcontext) {
         super(applicationcontext, "user.db", null, 1);
     }
@@ -66,9 +66,23 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
         values.put("description", queryValues.get("description"));
         values.put("latitude", queryValues.get("latitude"));
         values.put("longitude", queryValues.get("longitude"));
-        values.put("achievements", queryValues.get("achievements"));
+        values.put("achievementids", queryValues.get("achievements"));
 
         database.insert("lists", null, values);
+        database.close();
+    }
+    public void insertAchievement(HashMap<String, String> queryValues) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("title", queryValues.get("title").toString());
+        values.put("imageLink", queryValues.get("imageLink").toString());
+        values.put("description", queryValues.get("description").toString());
+        values.put("latitude", queryValues.get("latitude").toString());
+        values.put("longitude", queryValues.get("longitude").toString());
+        values.put("radius", queryValues.get("radius").toString());
+
+        database.insert("achievements", null, values);
         database.close();
     }
 
@@ -91,10 +105,37 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
                 map.put("achievements", cursor.getString(4));
 
                 ListOfLists.add(map);
+                
 
             } while (cursor.moveToNext());
         }
-        database.close();
+
+        return ListOfLists;
+    }
+
+    public ArrayList<HashMap<String, String>> getAllAchievements() {
+        ArrayList<HashMap<String, String>> ListOfLists;
+        ListOfLists = new ArrayList<HashMap<String, String>>();
+        String selectQuery = "SELECT  * FROM achievements";
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                HashMap<String, String> map = new HashMap<String, String>();
+
+                map.put("title", cursor.getString(0));
+                map.put("imageLink", cursor.getString(1));
+                map.put("latitude", cursor.getString(2));
+                map.put("longitude", cursor.getString(3));
+                map.put("radius", cursor.getString(4));
+                map.put("description", cursor.getString(5));
+
+                ListOfLists.add(map);
+
+            } while (cursor.moveToNext());
+        }
+
         return ListOfLists;
     }
 
@@ -123,19 +164,82 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
             e.printStackTrace();
         }
 
+        URL viewAchievementURL = null;
+        try {
+            viewAchievementURL = new URL("http://www.johnhinkel.com/sqlitemysqlsync/viewAchievements.php");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
         ArrayList<HashMap<String, String>> retMap = null;
 
-           syncResult.execute(viewListURL);
+        syncResult.execute(viewListURL);
+        syncResult2.execute(viewAchievementURL);
 
-        Log.e("TEST",syncResult.responseStr);
+
 
 
 
     }
+    public void processFinish2(String output){
+        final SQLiteDatabase database = this.getWritableDatabase();
+        Log.e("PROCESS FINISHED SECOND ONE",output);
+        JSONArray arr = null;
+        ArrayList<HashMap<String, String>> ListofLists = new ArrayList<HashMap<String, String>>();
+        try {
+            arr = new JSONArray(output);
+            System.out.println(arr.length());
+
+            for(int i=0; i<arr.length();i++){
+                JSONObject obj = (JSONObject)arr.get(i);
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("title", obj.get("title").toString());
+                map.put("imageLink", obj.get("imageLink").toString());
+                map.put("description", obj.get("description").toString());
+                map.put("latitude", obj.get("latitude").toString());
+                map.put("longitude", obj.get("longitude").toString());
+                map.put("radius", obj.get("radius").toString());
+                ListofLists.add(map);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        for(int i=0;i<ListofLists.size();i++){
+            insertAchievement(ListofLists.get(i));
+        }
+        ArrayList<HashMap<String, String>> retAchievement = getAllAchievements();
+        Log.e("LOCAL ACHIEVEMENT LENGTH", Integer.toString(retAchievement.size()));
+    }
     public void processFinish(String output){
        final SQLiteDatabase database = this.getWritableDatabase();
        Log.e("PROCESS FINISHED",output);
-       //REBUILD THE DATABASE WITH THE NEW DATA HERE!!!!!
+        JSONArray arr = null;
+        ArrayList<HashMap<String, String>> ListofLists = new ArrayList<HashMap<String, String>>();
+        try {
+            arr = new JSONArray(output);
+            System.out.println(arr.length());
+
+           for(int i=0; i<arr.length();i++){
+               JSONObject obj = (JSONObject)arr.get(i);
+               HashMap<String, String> map = new HashMap<String, String>();
+               map.put("title", obj.get("title").toString());
+               map.put("description", obj.get("description").toString());
+               map.put("latitude", obj.get("latitude").toString());
+               map.put("longitude", obj.get("longitude").toString());
+               map.put("achievementids", obj.get("achievements").toString());
+               ListofLists.add(map);
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        for(int i=0;i<ListofLists.size();i++){
+            insertList(ListofLists.get(i));
+        }
+
+
+
     }
 }
