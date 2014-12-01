@@ -1,17 +1,22 @@
 package edu.gatech.travel;
 
+        import java.net.MalformedURLException;
+        import java.net.URL;
         import java.util.ArrayList;
         import java.util.HashMap;
+        import java.util.concurrent.ExecutionException;
 
         import android.content.ContentValues;
         import android.content.Context;
         import android.database.Cursor;
         import android.database.sqlite.SQLiteDatabase;
         import android.database.sqlite.SQLiteOpenHelper;
+        import android.util.Log;
         import android.widget.Toast;
 
         import com.loopj.android.http.AsyncHttpClient;
         import com.loopj.android.http.AsyncHttpResponseHandler;
+        import com.loopj.android.http.JsonHttpResponseHandler;
         import com.loopj.android.http.RequestParams;
 
         import org.json.JSONArray;
@@ -73,6 +78,7 @@ public class DBController  extends SQLiteOpenHelper {
         String selectQuery = "SELECT  * FROM lists";
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = database.rawQuery(selectQuery, null);
+
         if (cursor.moveToFirst()) {
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
@@ -83,6 +89,7 @@ public class DBController  extends SQLiteOpenHelper {
                 map.put("achievements", cursor.getString(4));
 
                 ListOfLists.add(map);
+
             } while (cursor.moveToNext());
         }
         database.close();
@@ -91,60 +98,40 @@ public class DBController  extends SQLiteOpenHelper {
 
 
     public void syncDatabases(){
-        // Create AsycHttpClient object
-        AsyncHttpClient client = new AsyncHttpClient();
+
+
+
+
         // Http Request Params Object
         final SQLiteDatabase database = this.getWritableDatabase();
-        RequestParams params = new RequestParams();
-        client.post("http://www.johnhinkel.com/sqlitemysqlsync/viewList.php",params ,new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(String response) {
-                System.out.println(response);
-                //CLEAR LISTS SQLITE TABLE AND INSERT SERVER RESPONSE INTO CLEARED TABLE
-                String query;
-                String query2;
-                query = "DROP TABLE IF EXISTS lists";
-                query2 = "DROP TABLE IF EXISTS achievements";
+        //CLEAR LISTS SQLITE TABLE AND INSERT SERVER RESPONSE INTO CLEARED TABLE
+        String query;
+        String query2;
+        query = "DROP TABLE IF EXISTS lists";
+        query2 = "DROP TABLE IF EXISTS achievements";
 
-                database.execSQL(query);
-                database.execSQL(query2);
-                onCreate(database);
+        database.execSQL(query);
+        database.execSQL(query2);
+        String query3;
+        String query4;
+        query3 = "CREATE TABLE lists(ID integer NOT NULL, title varchar(50), description varchar(500), latitude varchar(500), longitude varchar(500), achievementids varchar(1000), PRIMARY KEY(ID))";
+        query4 = "CREATE TABLE achievements(ID integer NOT NULL, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), PRIMARY KEY(ID))";
+        database.execSQL(query3);
+        database.execSQL(query4);
+        URL viewListURL = null;
+        try {
+             viewListURL = new URL("http://www.johnhinkel.com/sqlitemysqlsync/viewList.php");
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        dbSync syncResult = new dbSync();
 
-                //insert data back into tables;
-                try {
-                    JSONArray arr = new JSONArray(response);
-                    System.out.println(arr.length());
-                    for(int i=0; i<arr.length();i++){
-                        JSONObject obj = (JSONObject)arr.get(i);
-                        System.out.println(obj.get("id"));
-                        System.out.println(obj.get("status"));
-                        HashMap<String, String> queryValues = new HashMap<String, String>();
-                        queryValues.put("title", obj.get("title").toString());
-                        queryValues.put("description", obj.get("description").toString());
-                        queryValues.put("latitude", obj.get("latitude").toString());
-                        queryValues.put("longitude", obj.get("longitude").toString());
-                        queryValues.put("achievements", obj.get("achievements").toString());
-                        insertList(queryValues);
+        ArrayList<HashMap<String, String>> retMap = null;
 
-                    }
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-
-                    e.printStackTrace();
-                }
-            }
-            public void onFailure(int statusCode, Throwable error,
-                                  String content) {
-                // TODO Auto-generated method stub
-
-                System.out.println("FAIL");
-
-            }
+            syncResult.execute(viewListURL);
 
 
 
-        });
     }
 
 }
