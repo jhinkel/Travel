@@ -8,27 +8,27 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.facebook.UiLifecycleHelper;
-import com.facebook.widget.FacebookDialog;
+//import com.facebook.UiLifecycleHelper;
+//import com.facebook.widget.FacebookDialog;
 
 
 public class CompleteAchievement extends Activity {
 
-    private UiLifecycleHelper uiHelper;
+    //private UiLifecycleHelper uiHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_complete_achievement);
 
-        uiHelper = new UiLifecycleHelper(this, null);
-        uiHelper.onCreate(savedInstanceState);
+       // uiHelper = new UiLifecycleHelper(this, null);
+       // uiHelper.onCreate(savedInstanceState);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        /*
         uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
             @Override
             public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
@@ -39,31 +39,31 @@ public class CompleteAchievement extends Activity {
             public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
                 Log.i("Activity", "Success!");
             }
-        });
+        });*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        uiHelper.onResume();
+        //uiHelper.onResume();
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        uiHelper.onSaveInstanceState(outState);
+        //uiHelper.onSaveInstanceState(outState);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        uiHelper.onPause();
+        //uiHelper.onPause();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        uiHelper.onDestroy();
+        //uiHelper.onDestroy();
     }
 
     @Override
@@ -89,9 +89,9 @@ public class CompleteAchievement extends Activity {
     }
 
     public void onShareClick(View v){
-        FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(this)
+        /*FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(this)
                 .setLink("https://developers.facebook.com/android")
                 .build();
-        uiHelper.trackPendingDialogCall(shareDialog.present());
+        uiHelper.trackPendingDialogCall(shareDialog.present());*/
     }
 }

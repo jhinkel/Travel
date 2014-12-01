@@ -13,12 +13,12 @@ package edu.gatech.travel;
         import android.database.sqlite.SQLiteOpenHelper;
         import android.util.Log;
         import android.widget.Toast;
-
+        /*
         import com.loopj.android.http.AsyncHttpClient;
         import com.loopj.android.http.AsyncHttpResponseHandler;
         import com.loopj.android.http.JsonHttpResponseHandler;
         import com.loopj.android.http.RequestParams;
-
+        */
 
         import org.json.JSONArray;
         import org.json.JSONException;
@@ -100,10 +100,6 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
 
 
     public void syncDatabases(){
-
-
-
-
         // Http Request Params Object
         final SQLiteDatabase database = this.getWritableDatabase();
         //CLEAR LISTS SQLITE TABLE AND INSERT SERVER RESPONSE INTO CLEARED TABLE
@@ -130,7 +126,8 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
 
         ArrayList<HashMap<String, String>> retMap = null;
 
-            syncResult.execute(viewListURL);
+           syncResult.execute(viewListURL);
+
         Log.e("TEST",syncResult.responseStr);
 
 
@@ -139,5 +136,6 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse{
     public void processFinish(String output){
        final SQLiteDatabase database = this.getWritableDatabase();
        Log.e("PROCESS FINISHED",output);
+       //REBUILD THE DATABASE WITH THE NEW DATA HERE!!!!!
     }
 }

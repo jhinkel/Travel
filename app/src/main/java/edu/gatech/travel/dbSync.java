@@ -26,7 +26,7 @@ import java.util.HashMap;
 /**
  * Created by John B. Hinkel III on 11/30/2014.
  */
-class dbSync extends AsyncTask<URL,Void,String> {
+public class dbSync extends AsyncTask<URL,Void,String> {
     String responseStr = "";
     public String retStr = "";
 
