@@ -7,13 +7,21 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 
 public class ViewListActivity extends Activity {
+
+    DBController controller = new DBController(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_list);
+        ArrayList<HashMap<String,String>> ListofLists = new ArrayList<HashMap<String,String>>();
+        ListofLists = controller.getAllLists();
     }
 
 
