@@ -166,7 +166,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
 
         URL viewAchievementURL = null;
         try {
-            viewAchievementURL = new URL("http://www.johnhinkel.com/sqlitemysqlsync/viewAchievements.php");
+            viewAchievementURL = new URL("http://www.johnhinkel.com/sqlitemysqlsync/viewAchievement.php");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
