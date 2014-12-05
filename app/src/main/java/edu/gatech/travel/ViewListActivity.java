@@ -41,13 +41,8 @@ public class ViewListActivity extends Activity {
         return true;
     }
     public void onViewClick(View v){
-        View parent = (View)v.getParent();
-        ListView x = (ListView)parent.findViewById(R.id.list);
-        x.setAdapter(adapter);
 
-
-
-        //startActivity(new Intent(getApplicationContext(),ViewIndividualList.class));
+        startActivity(new Intent(getApplicationContext(),ViewIndividualList.class));
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
