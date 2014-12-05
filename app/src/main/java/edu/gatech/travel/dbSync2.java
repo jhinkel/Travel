@@ -19,18 +19,18 @@ public class dbSync2 extends AsyncTask<URL,Void,String> {
     String responseStr = "";
     public String retStr = "";
 
-    private AsyncResponse2 delegate;
+        private AsyncResponse2 delegate;
 
-    public dbSync2(AsyncResponse2 listener){
-        delegate = listener;
-    }
+        public dbSync2(AsyncResponse2 listener){
+            delegate = listener;
+        }
     protected String doInBackground(URL... urls) {
         HttpClient httpclient;
         HttpGet request;
         HttpResponse response = null;
         String result = "";
         // TextView to display result
-
+        //test
         // Try to connect using Apache HttpClient Library
         try {
             httpclient = new DefaultHttpClient();
