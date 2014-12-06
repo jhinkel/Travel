@@ -6,14 +6,37 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+//import java.util.HashMap;
 
 
 public class ViewIndividualList extends Activity {
+    //ArrayList<String> listItems=new ArrayList<String>();
+    achievementAdapter adapter;
+    //DBController controller = new DBController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_individual_list);
+
+        //Get the string of achievements from the intent, split it, and put it in an array.
+        String[] achievements = getIntent().getExtras().getString("Achievements").split(", ");
+        ArrayList<String> intentAchievements = new ArrayList<String>();
+        intentAchievements.addAll(Arrays.asList(achievements));
+
+
+        adapter=new achievementAdapter(this, intentAchievements);
+
+        //DBController database = new DBController(this);
+        ListView x = (ListView) this.findViewById(R.id.listView);
+        x.setAdapter(adapter);
+
+        //listItems.addAll(achievements);
+
     }
 
 
