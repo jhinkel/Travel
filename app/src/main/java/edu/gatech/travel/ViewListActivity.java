@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ViewListActivity extends Activity {
+public class ViewListActivity extends Activity{
 
     DBController controller = new DBController(this);
     ArrayList<HashMap<String,String>> listItems=new ArrayList<HashMap<String,String>>();

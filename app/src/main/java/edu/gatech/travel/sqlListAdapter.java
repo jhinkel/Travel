@@ -55,4 +55,18 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
         //Return the view!
         return convertView;
     }
+
+    //THIS MAY OR NOT FIX THIS
+    @Override
+    public boolean areAllItemsEnabled()
+    {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled(int arg0)
+    {
+        return true;
+    }
+
 }
