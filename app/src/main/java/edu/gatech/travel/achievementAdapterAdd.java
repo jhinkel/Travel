@@ -10,11 +10,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class achievementAdapter extends ArrayAdapter<String>{ //change string
+public class achievementAdapterAdd extends ArrayAdapter<String>{ //change string
     private ArrayList<String> listItems;
 
-    public achievementAdapter(Context context, ArrayList<String> listItems){
-        super(context,R.layout.achievement_card,listItems);
+    public achievementAdapterAdd(Context context, ArrayList<String> listItems){
+        super(context,R.layout.achievement_card_add,listItems);
         this.listItems = listItems;
     }
 

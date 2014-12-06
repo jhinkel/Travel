@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 public class AchievementList extends Activity {
     ArrayList<String> listItems=new ArrayList<String>();
-    achievementAdapter adapter;
+    achievementAdapterAdd adapter;
     DBController controller = new DBController(this);
 
     @Override
@@ -22,7 +22,7 @@ public class AchievementList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement_list);
 
-        adapter=new achievementAdapter(this, listItems);
+        adapter=new achievementAdapterAdd(this, listItems);
 
         DBController database = new DBController(this);
         ListView x = (ListView) this.findViewById(R.id.listView);

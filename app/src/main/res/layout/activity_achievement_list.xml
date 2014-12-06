@@ -11,22 +11,17 @@
         android:layout_height="wrap_content"
         android:text="Add New"
         android:id="@+id/btnNew"
-        android:layout_marginTop="134dp"
+        android:onClick="onNewClick"
         android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="58dp"
-        android:onClick="onNewClick" />
+        android:layout_alignRight="@+id/listView"
+        android:layout_alignEnd="@+id/listView" />
 
-    <Button
+    <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Existing ListView button"
-        android:id="@+id/btnExisting"
-        android:onClick="onExistingClick"
-        android:layout_toEndOf="@+id/btnNew"
-        android:layout_centerVertical="true"
-        android:layout_alignLeft="@+id/btnNew"
-        android:layout_alignStart="@+id/btnNew" />
+        android:id="@+id/listView"
+        android:layout_below="@+id/btnNew"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

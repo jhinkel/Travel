@@ -135,12 +135,13 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
             do {
                 HashMap<String, String> map = new HashMap<String, String>();
 
-                map.put("title", cursor.getString(0));
-                map.put("imageLink", cursor.getString(1));
-                map.put("latitude", cursor.getString(2));
-                map.put("longitude", cursor.getString(3));
-                map.put("radius", cursor.getString(4));
-                map.put("description", cursor.getString(5));
+                map.put("id", cursor.getString(0));
+                map.put("title", cursor.getString(1));
+                map.put("imageLink", cursor.getString(2));
+                map.put("latitude", cursor.getString(3));
+                map.put("longitude", cursor.getString(4));
+                map.put("radius", cursor.getString(5));
+                map.put("description", cursor.getString(6));
 
                 ListOfLists.add(map);
 
