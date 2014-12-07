@@ -21,9 +21,6 @@ public class achievementAdapter extends ArrayAdapter<String>{ //change string
     private static class ViewHolder {
         TextView title;
         TextView description;
-        TextView latitude;
-        TextView longitude;
-        TextView radius;
     }
 
     @Override
@@ -37,9 +34,6 @@ public class achievementAdapter extends ArrayAdapter<String>{ //change string
 
             viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.tvDescription);
-            viewHolder.latitude = (TextView) convertView.findViewById(R.id.tvLatitude);
-            viewHolder.longitude = (TextView) convertView.findViewById(R.id.tvLongitude);
-            viewHolder.radius = (TextView) convertView.findViewById(R.id.tvRadius);
 
             convertView.setTag(viewHolder);
         } else {
@@ -56,9 +50,9 @@ public class achievementAdapter extends ArrayAdapter<String>{ //change string
 
         viewHolder.title.setText(ListofLists2.get(index).get("title"));
         viewHolder.description.setText(ListofLists2.get(index).get("description"));
-        viewHolder.latitude.setText(ListofLists2.get(index).get("latitude"));
-        viewHolder.longitude.setText(ListofLists2.get(index).get("longitude"));
-        viewHolder.radius.setText(ListofLists2.get(index).get("radius"));
+
+        //Set code for buttons!
+
 
         //Return the view!
         return convertView;
