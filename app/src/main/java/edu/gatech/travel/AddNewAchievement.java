@@ -50,7 +50,14 @@ public class AddNewAchievement extends Activity {
             controller.insertAchievement(queryValues);
 
             syncSQLiteMySQLDBAchievement(queryValues);
-            startActivity(new Intent(getApplicationContext(), AchievementList.class));
+            String titlepass = getIntent().getExtras().getString("title");
+            String descriptionpass = getIntent().getExtras().getString("description");
+            Intent intent = new Intent(getApplicationContext(),AchievementList.class);
+            intent.putExtra("title", titlepass);
+            intent.putExtra("description",descriptionpass);
+            startActivity(intent);
+
+
         }
     }
     public void syncSQLiteMySQLDBAchievement( HashMap<String, String> listvals) {

@@ -18,7 +18,18 @@
     <Button
         android:layout_width="209dp"
         android:layout_height="wrap_content"
-        android:text="Add all achievements in queue"
+        android:text="Add New Achievement"
+        android:id="@+id/btnAddnew"
+        android:layout_weight="0.46"
+        android:layout_gravity="center_horizontal"
+        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="10dp"
+        android:onClick="onNewClick" />
+
+    <Button
+        android:layout_width="209dp"
+        android:layout_height="wrap_content"
+        android:text="Add achievements in queue"
         android:id="@+id/btnAddList"
         android:layout_gravity="center_horizontal"
         android:background="@android:color/darker_gray"

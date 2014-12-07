@@ -44,7 +44,13 @@ public class AchievementList extends Activity {
     }
 
     public void onNewClick(View v){
-        startActivity(new Intent(getApplicationContext(), AddNewAchievement.class));
+        String title = getIntent().getExtras().getString("title");
+        String description = getIntent().getExtras().getString("description");
+        Intent intent = new Intent(getApplicationContext(),AddNewAchievement.class);
+        intent.putExtra("title", title);
+        intent.putExtra("description",description);
+        startActivity(intent);
+
     }
 
     String achievementQueue = "";
@@ -74,11 +80,12 @@ public class AchievementList extends Activity {
         String title = getIntent().getExtras().getString("title");
         String description = getIntent().getExtras().getString("description");
 
-        listofParams.put("title","TITLE HERE");
-        listofParams.put("description","DESCRIPTION HERE");
+        listofParams.put("title",title);
+        listofParams.put("description",description);
         listofParams.put("achievementids",achievementQueue);
         controller.UpdateListWithAchievements(listofParams);
         updateSQLiteMySQLDBList(listofParams);
+        toast("achievements successfully added");
 
     }
     public void updateSQLiteMySQLDBList( HashMap<String, String> listvals) {
@@ -88,7 +95,8 @@ public class AchievementList extends Activity {
         RequestParams params = new RequestParams();
         params.put("title",listvals.get("title"));
         params.put("description",listvals.get("description"));
-        params.put("id",listvals.get("id"));
+        params.put("id",listvals.get("achievementids"));
+        Log.e("ACHIEVEMENT IDS",listvals.get("achievementids"));
         client.post("http://www.johnhinkel.com/sqlitemysqlsync/updateList.php", params, new AsyncHttpResponseHandler() {
         });
     }
