@@ -1,6 +1,7 @@
 package edu.gatech.travel;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,17 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
         viewHolder.longitude.setText(ListofLists2.get(position).get("longitude"));
         viewHolder.achievementids.setText(ListofLists2.get(position).get("achievementids"));
 
+        final String achievementIds = ListofLists2.get(position).get("achievementids");
+        android.view.View.OnClickListener yourClickListener = new android.view.View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(),ViewIndividualList.class);
+                intent.putExtra("Achievements", achievementIds);
+                getContext().startActivity(intent);
+
+            }
+        };
+
+        convertView.setOnClickListener(yourClickListener);
         //Return the view!
         return convertView;
     }
@@ -60,7 +72,7 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
     @Override
     public boolean areAllItemsEnabled()
     {
-        return true;
+        return false;
     }
 
     @Override

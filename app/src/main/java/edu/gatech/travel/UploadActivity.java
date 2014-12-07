@@ -3,9 +3,11 @@ package edu.gatech.travel;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,13 +37,49 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
+import android.location.LocationManager;
 
-public class UploadActivity extends Activity  {
+public class UploadActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener{
     // DB Class to perform DB related operations
+    LocationClient myLocationClient;
+    double latitude;
+    double longitude;
+    private static final LocationRequest REQUEST = LocationRequest.create()
+            .setInterval(5000)         // 5 seconds
+            .setFastestInterval(16)    // 16ms = 60fps
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     DBController controller = new DBController(this);
     HashMap<String, String> queryValues = new HashMap<String, String>();
+    public void onConnected(Bundle bundle) {
+        myLocationClient.requestLocationUpdates(REQUEST, this);
+
+    }
+    @Override
+    public void onDisconnected() {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+
+    }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        myLocationClient = new LocationClient(getApplicationContext(), this, this);
+
+        if(myLocationClient != null)
+            myLocationClient.connect();
+        LocationManager locationManager =(LocationManager)getSystemService(Context.LOCATION_SERVICE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
     }
@@ -58,25 +96,33 @@ public class UploadActivity extends Activity  {
         NetworkInfo.State wifi = conMan.getNetworkInfo(1).getState();
         //Ensures database syncing since you can't add records without an internet connection
         if (mobile == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTED) {
+            if(latitude ==0 || longitude==0){
+                toast("Still obtaining your location... please try again.");
+            }else {
+
+                View parentView = (View) v.getParent();
+                EditText title = (EditText) parentView.findViewById(R.id.tfTitle);
+                EditText description = (EditText) parentView.findViewById(R.id.tfDescription);
 
 
-            View parentView = (View) v.getParent();
-            EditText title = (EditText) parentView.findViewById(R.id.tfTitle);
-            EditText description = (EditText) parentView.findViewById(R.id.tfDescription);
-
-
-            queryValues.put("title", title.getText().toString());
-            queryValues.put("description", description.getText().toString());
-            queryValues.put("latitude", "0");
-            queryValues.put("longitude", "0");
-            queryValues.put("achievements", "");
-            controller.insertList(queryValues);
-            syncSQLiteMySQLDBList(queryValues);
-            startActivity(new Intent(getApplicationContext(), AchievementList.class));
+                queryValues.put("title", title.getText().toString());
+                queryValues.put("description", description.getText().toString());
+                queryValues.put("latitude", "0");
+                queryValues.put("longitude", "0");
+                queryValues.put("achievements", "");
+                controller.insertList(queryValues);
+                syncSQLiteMySQLDBList(queryValues);
+                startActivity(new Intent(getApplicationContext(), AchievementList.class));
+            }
         }
         else{
 
         }
+    }
+    private void toast(String text){
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+        toast.show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

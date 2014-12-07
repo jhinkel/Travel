@@ -3,9 +3,11 @@ package edu.gatech.travel;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -40,6 +42,9 @@ public class AchievementList extends Activity {
     }
 
     public void onExistingClick(View v){
+        View parentView = (View) v.getParent();
+        EditText title = (EditText) parentView.findViewById(R.id.tvTitle);
+        Log.e("TITLE OF CORRESPONDING ACHIEVEMENT!!!", "TITLE");
         //get textbox for id from v (Run app to see if there is an ID textbox.  if not, add it into the card).
         //add that id to a comma-separated list inside a textbox.
     }

@@ -33,7 +33,7 @@ public class achievementAdapterAdd extends ArrayAdapter<String>{ //change string
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.achievement_card, parent, false);
+            convertView = inflater.inflate(R.layout.achievement_card_add, parent, false);
 
             viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.tvDescription);
@@ -56,9 +56,9 @@ public class achievementAdapterAdd extends ArrayAdapter<String>{ //change string
 
         viewHolder.title.setText(ListofLists2.get(index).get("title"));
         viewHolder.description.setText(ListofLists2.get(index).get("description"));
-        viewHolder.latitude.setText(ListofLists2.get(index).get("latitude"));
-        viewHolder.longitude.setText(ListofLists2.get(index).get("longitude"));
-        viewHolder.radius.setText(ListofLists2.get(index).get("radius"));
+        //viewHolder.latitude.setText(ListofLists2.get(index).get("latitude"));
+        //viewHolder.longitude.setText(ListofLists2.get(index).get("longitude"));
+        //viewHolder.radius.setText(ListofLists2.get(index).get("radius"));
 
         //Return the view!
         return convertView;

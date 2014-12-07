@@ -3,6 +3,7 @@ package edu.gatech.travel;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,19 +26,23 @@ public class ViewIndividualList extends Activity {
 
         //Get the string of achievements from the intent, split it, and put it in an array.
         String achieveString = getIntent().getExtras().getString("Achievements");
-        String[] achievements = achieveString.split(", ");
-        ArrayList<String> intentAchievements = new ArrayList<String>();
-        intentAchievements.addAll(Arrays.asList(achievements));
+        if(achieveString != null) {
+            String[] achievements = achieveString.split(", ");
+            ArrayList<String> intentAchievements = new ArrayList<String>();
+            intentAchievements.addAll(Arrays.asList(achievements));
 
 
-        adapter=new achievementAdapter(this, intentAchievements);
+            adapter = new achievementAdapter(this, intentAchievements);
 
-        //DBController database = new DBController(this);
-        ListView x = (ListView) this.findViewById(R.id.listView);
-        x.setAdapter(adapter);
+            //DBController database = new DBController(this);
+            ListView x = (ListView) this.findViewById(R.id.list);
+            x.setAdapter(adapter);
 
-        //listItems.addAll(achievements);
-
+            //listItems.addAll(achievements);
+        }
+        else{
+            Log.e("EVENT FIRED ACHIEVEMENT!!!!", "EVENT FIRED");
+        }
     }
 
 

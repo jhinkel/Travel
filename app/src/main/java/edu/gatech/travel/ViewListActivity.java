@@ -1,6 +1,7 @@
 package edu.gatech.travel;
 
 import android.app.Activity;
+import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 
-public class ViewListActivity extends Activity{
+public class ViewListActivity extends Activity {
 
     DBController controller = new DBController(this);
     ArrayList<HashMap<String,String>> listItems=new ArrayList<HashMap<String,String>>();
@@ -31,7 +32,7 @@ public class ViewListActivity extends Activity{
 
         listItems = controller.getAllLists();
         adapter.addAll(listItems);
-
+        /*
         x.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -42,7 +43,7 @@ public class ViewListActivity extends Activity{
                 intent.putExtra("Achievements", achievementIds);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 
