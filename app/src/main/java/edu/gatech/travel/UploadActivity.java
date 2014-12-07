@@ -36,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class UploadActivity extends Activity {
+public class UploadActivity extends Activity  {
     // DB Class to perform DB related operations
     DBController controller = new DBController(this);
     HashMap<String, String> queryValues = new HashMap<String, String>();
