@@ -85,7 +85,8 @@ public class AchievementList extends Activity {
         controller.UpdateListWithAchievements(listofParams);
         updateSQLiteMySQLDBList(listofParams);
         toast("achievements successfully added");
-
+        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+        startActivity(intent);
     }
     public void updateSQLiteMySQLDBList( HashMap<String, String> listvals) {
         // Create AsycHttpClient object
