@@ -50,7 +50,6 @@ public class AchievementList extends Activity {
         intent.putExtra("title", title);
         intent.putExtra("description",description);
         startActivity(intent);
-
     }
 
     String achievementQueue = "";
