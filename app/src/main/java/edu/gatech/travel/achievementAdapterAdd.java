@@ -24,6 +24,7 @@ public class achievementAdapterAdd extends ArrayAdapter<String>{ //change string
         TextView latitude;
         TextView longitude;
         TextView radius;
+        TextView id;
     }
 
     @Override
@@ -34,7 +35,7 @@ public class achievementAdapterAdd extends ArrayAdapter<String>{ //change string
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.achievement_card_add, parent, false);
-
+            viewHolder.id = (TextView) convertView.findViewById(R.id.tvId);
             viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.tvDescription);
             viewHolder.latitude = (TextView) convertView.findViewById(R.id.tvLatitude);
@@ -53,9 +54,10 @@ public class achievementAdapterAdd extends ArrayAdapter<String>{ //change string
         {
             index++;
         }
-
+        viewHolder.id.setText(ListofLists2.get(index).get("id"));
         viewHolder.title.setText(ListofLists2.get(index).get("title"));
         viewHolder.description.setText(ListofLists2.get(index).get("description"));
+
         //viewHolder.latitude.setText(ListofLists2.get(index).get("latitude"));
         //viewHolder.longitude.setText(ListofLists2.get(index).get("longitude"));
         //viewHolder.radius.setText(ListofLists2.get(index).get("radius"));

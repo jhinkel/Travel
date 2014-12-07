@@ -107,12 +107,16 @@ public class UploadActivity extends Activity implements GooglePlayServicesClient
 
                 queryValues.put("title", title.getText().toString());
                 queryValues.put("description", description.getText().toString());
-                queryValues.put("latitude", "0");
-                queryValues.put("longitude", "0");
-                queryValues.put("achievements", "");
+                queryValues.put("latitude", Double.toString(latitude));
+                queryValues.put("longitude", Double.toString(longitude));
+                queryValues.put("achievementids", "");
                 controller.insertList(queryValues);
-                syncSQLiteMySQLDBList(queryValues);
-                startActivity(new Intent(getApplicationContext(), AchievementList.class));
+                //syncSQLiteMySQLDBList(queryValues);
+                Intent intent = new Intent(getApplicationContext(),AchievementList.class);
+                intent.putExtra("title", title.getText().toString());
+                intent.putExtra("description",description.getText().toString());
+                startActivity(intent);
+
             }
         }
         else{

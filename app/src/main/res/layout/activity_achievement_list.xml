@@ -10,24 +10,18 @@
     android:background="@drawable/download2backgroundimage">
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="275dp"
-        android:id="@+id/listView"/>
-
-    <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:layout_gravity="center_horizontal"
-        android:background="#ffffffff"
-        android:layout_weight="0.14" />
+        android:layout_height="400dp"
+        android:id="@+id/listView"
+        android:layout_weight="0.46" />
 
     <Button
         android:layout_width="209dp"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:text="Add all achievements in queue"
         android:id="@+id/btnAddList"
         android:layout_gravity="center_horizontal"
-        android:background="@android:color/darker_gray" />
+        android:background="@android:color/darker_gray"
+        android:onClick="AddAchievementsToList" />
 
 </LinearLayout>

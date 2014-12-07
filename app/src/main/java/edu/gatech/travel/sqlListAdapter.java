@@ -51,9 +51,9 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
         viewHolder.description.setText(ListofLists2.get(position).get("description"));
         viewHolder.latitude.setText(ListofLists2.get(position).get("latitude"));
         viewHolder.longitude.setText(ListofLists2.get(position).get("longitude"));
-        viewHolder.achievementids.setText(ListofLists2.get(position).get("achievementids"));
+        viewHolder.achievementids.setText(ListofLists2.get(position).get("achievements"));
 
-        final String achievementIds = ListofLists2.get(position).get("achievementids");
+        final String achievementIds = ListofLists2.get(position).get("achievements");
         android.view.View.OnClickListener yourClickListener = new android.view.View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(),ViewIndividualList.class);

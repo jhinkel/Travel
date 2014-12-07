@@ -66,7 +66,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         values.put("description", queryValues.get("description"));
         values.put("latitude", queryValues.get("latitude"));
         values.put("longitude", queryValues.get("longitude"));
-        values.put("achievementids", queryValues.get("achievements"));
+        values.put("achievementids", queryValues.get("achievementids"));
 
         database.insert("lists", null, values);
         database.close();

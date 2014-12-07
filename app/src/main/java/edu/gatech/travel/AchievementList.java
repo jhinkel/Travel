@@ -1,6 +1,7 @@
 package edu.gatech.travel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,16 +47,50 @@ public class AchievementList extends Activity {
         startActivity(new Intent(getApplicationContext(), AddNewAchievement.class));
     }
 
+    String achievementQueue = "";
     public void onExistingClick(View v){
         View parentView = (View) v.getParent();
-        EditText title = (EditText) parentView.findViewById(R.id.tvTitle);
-        Log.e("TITLE OF CORRESPONDING ACHIEVEMENT!!!", "TITLE");
+        EditText id = (EditText) parentView.findViewById(R.id.tvId);
+        if (achievementQueue.equals("")){
+            achievementQueue = achievementQueue+id.getText().toString();
+        }
+        else{
+            achievementQueue = achievementQueue+", " + id.getText().toString();
+        }
+        toast("Achievement added to queue");
+
         //get textbox for id from v (Run app to see if there is an ID textbox.  if not, add it into the card).
         //add that id to a comma-separated list inside a textbox.
     }
+    private void toast(String text){
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+        toast.show();
+    }
     public void AddAchievementsToList(View v){
-        //In here, get title and description from upload activity (activity that loads this screen).
-        //Then pass in title, description, and list of ids to dbcontroller.updateList()
+        //get title and description from upload activity
+
+        HashMap<String,String> listofParams = new HashMap<String,String>();
+        String title = getIntent().getExtras().getString("title");
+        String description = getIntent().getExtras().getString("description");
+
+        listofParams.put("title","TITLE HERE");
+        listofParams.put("description","DESCRIPTION HERE");
+        listofParams.put("achievementids",achievementQueue);
+        controller.UpdateListWithAchievements(listofParams);
+        updateSQLiteMySQLDBList(listofParams);
+
+    }
+    public void updateSQLiteMySQLDBList( HashMap<String, String> listvals) {
+        // Create AsycHttpClient object
+        AsyncHttpClient client = new AsyncHttpClient();
+// Http Request Params Object
+        RequestParams params = new RequestParams();
+        params.put("title",listvals.get("title"));
+        params.put("description",listvals.get("description"));
+        params.put("id",listvals.get("id"));
+        client.post("http://www.johnhinkel.com/sqlitemysqlsync/updateList.php", params, new AsyncHttpResponseHandler() {
+        });
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

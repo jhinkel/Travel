@@ -26,6 +26,7 @@ public class ViewIndividualList extends Activity {
 
         //Get the string of achievements from the intent, split it, and put it in an array.
         String achieveString = getIntent().getExtras().getString("Achievements");
+        Log.e("achieveString",achieveString);
         if(achieveString != null) {
             String[] achievements = achieveString.split(", ");
             ArrayList<String> intentAchievements = new ArrayList<String>();
