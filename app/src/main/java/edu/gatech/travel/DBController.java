@@ -37,7 +37,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         String query;
         String query2;
         query = "CREATE TABLE lists(ID integer NOT NULL, title varchar(50), description varchar(500), latitude varchar(500), longitude varchar(500), achievementids varchar(1000), PRIMARY KEY(ID))";
-        query2 = "CREATE TABLE achievements(ID integer NOT NULL, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), PRIMARY KEY(ID))";
+        query2 = "CREATE TABLE achievements(ID integer NOT NULL, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), completed boolean, PRIMARY KEY(ID))";
         database.execSQL(query);
         database.execSQL(query2);
 
@@ -142,6 +142,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
                 map.put("longitude", cursor.getString(4));
                 map.put("radius", cursor.getString(5));
                 map.put("description", cursor.getString(6));
+                map.put("completed",cursor.getString(7));
 
                 ListOfLists.add(map);
 
@@ -166,7 +167,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         String query3;
         String query4;
         query3 = "CREATE TABLE lists(ID integer NOT NULL, title varchar(50), description varchar(500), latitude varchar(500), longitude varchar(500), achievementids varchar(1000), PRIMARY KEY(ID))";
-        query4 = "CREATE TABLE achievements(ID integer NOT NULL, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), PRIMARY KEY(ID))";
+        query4 = query2 = "CREATE TABLE achievements(ID integer NOT NULL, title varchar(50), imageLink varchar(500), latitude varchar(500), longitude varchar(500), radius varchar(5), description varchar(500), completed boolean, PRIMARY KEY(ID))";
         database.execSQL(query3);
         database.execSQL(query4);
         URL viewListURL = null;
@@ -221,11 +222,11 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
             insertAchievement(ListofLists.get(i));
         }
         ArrayList<HashMap<String, String>> retAchievement = getAllAchievements();
-        Log.e("LOCAL ACHIEVEMENT LENGTH", Integer.toString(retAchievement.size()));
+
     }
     public void processFinish(String output){
        final SQLiteDatabase database = this.getWritableDatabase();
-       Log.e("PROCESS FINISHED",output);
+
         JSONArray arr = null;
         ArrayList<HashMap<String, String>> ListofLists = new ArrayList<HashMap<String, String>>();
         try {
