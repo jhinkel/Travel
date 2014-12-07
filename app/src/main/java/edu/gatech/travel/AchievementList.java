@@ -32,6 +32,7 @@ public class AchievementList extends Activity {
             listItems.add(temp.get(i).get("id"));
         }
 
+
     }
 
     public void onNewClick(View v){
@@ -39,7 +40,12 @@ public class AchievementList extends Activity {
     }
 
     public void onExistingClick(View v){
-        //show list of existing ones
+        //get textbox for id from v (Run app to see if there is an ID textbox.  if not, add it into the card).
+        //add that id to a comma-separated list inside a textbox.
+    }
+    public void AddAchievementsToList(View v){
+        //In here, get title and description from upload activity (activity that loads this screen).
+        //Then pass in title, description, and list of ids to dbcontroller.updateList()
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
