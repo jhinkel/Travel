@@ -1,39 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="blocksDescendants">
+    android:layout_height="wrap_content"
+    android:layoutMode="opticalBounds"
+    android:visibility="visible"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:paddingRight="20dp"
+    android:paddingLeft="20dp">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvTitle"
-        android:editable="false" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvDescription"
-        android:layout_gravity="center_horizontal"
-        android:editable="false" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvTitle"
+            android:editable="false"
+            android:textAlignment="center"
+            android:text="title"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textIsSelectable="false"
+            android:textSize="22dp"
+            android:textColor="#FFFFFF" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvLatitude"
-        android:layout_gravity="center_horizontal"
-        android:editable="false" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDescription"
+            android:layout_gravity="center"
+            android:editable="false"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut viverra ante a diam pharetra, sit amet consequat mi vulputate. Mauris semper egestas massa, quis porttitor massa. In fringilla felis mattis, hendrerit diam sed, vestibulum nunc. Maecenas eu nisi porttitor, tincidunt dolor vitae, rutrum odio. Maecenas magna purus, interdum ut eros non, porta pulvinar nulla. Praesent ac eleifend nisl. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut a consectetur dui. Cras ut ante ac sapien hendrerit tincidunt. Phasellus lacinia erat ut quam viverra porta. Donec varius nibh id quam dictum mollis. Aenean interdum lobortis lectus vel ornare. Nunc semper fringilla sapien, sed placerat tortor congue sit amet. Ut laoreet ac magna et hendrerit."
+            android:textAlignment="gravity"
+            android:layout_below="@+id/tvTitle"
+            android:background="#FFFFFF" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvLongitude"
-        android:editable="false" />
+    </RelativeLayout>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvAchievements"
-        android:layout_gravity="center_horizontal"
-        android:editable="false" />
-</LinearLayout>
+        android:layout_gravity="right|top"
+        android:editable="false"
+        android:layout_below="@+id/tvTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLongitude"
+        android:editable="false"
+        android:visibility="invisible"
+        android:layout_below="@+id/tvTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="right|top" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvLatitude"
+        android:layout_gravity="right|top"
+        android:editable="false"
+        android:visibility="invisible"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:text="title" />
+
+</FrameLayout>
