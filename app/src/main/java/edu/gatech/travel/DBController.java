@@ -82,6 +82,18 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         database.update("lists",values,"title=? and description=?",params);
         database.close();
     }
+    public void UpdateCompleted(HashMap<String, String> queryValues) {
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put("completed", true);
+
+
+        String[] params = {queryValues.get("title"),queryValues.get("description")};
+
+        database.update("achievements",values,"title=? and description=?",params);
+        database.close();
+    }
     public void insertAchievement(HashMap<String, String> queryValues) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
