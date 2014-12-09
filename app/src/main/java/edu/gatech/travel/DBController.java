@@ -114,7 +114,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
             }
         }
 
-        String sqlQuery2 = "select count(*) from achievements where id in(" + sqlListIds + ") and completed=1";
+        String sqlQuery2 = "select count(*) from achievements where id in(" + sqlListIds + ") and completed='1'";
         Cursor cursor2 = database.rawQuery(sqlQuery2, null);
         HashMap<String,String> countCompleted = new HashMap<String,String>();
         Log.e("SQLQUERY2",sqlQuery2);
@@ -127,8 +127,8 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
             } while (cursor2.moveToNext());
         }
 
-        int countCompletedNumber = Integer.parseInt(countCompleted.get("count"));
-        int totalAchievements = 0;
+        float countCompletedNumber = Float.parseFloat(countCompleted.get("count"));
+        float totalAchievements = 0;
         try {
             totalAchievements = indivIds.length;
         }
