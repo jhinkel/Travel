@@ -94,6 +94,69 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         database.update("achievements",values,"title=? and description=?",params);
         database.close();
     }
+    public int getAchievementCount(HashMap<String,String> listvals){
+        String selectQuery = "SELECT achievementids FROM lists where title='" + listvals.get("title").toString() + "' and description='" + listvals.get("description").toString() + "'";
+        SQLiteDatabase database = this.getWritableDatabase();
+        Cursor cursor = database.rawQuery(selectQuery, null);
+
+        String sqlListIds = "";
+        String[] indivIds = null;
+        if (cursor.moveToFirst()) {
+            indivIds = cursor.getString(0).split(", ");
+            for(int i=0;i<indivIds.length;i++){
+
+                if (i==0){
+                    sqlListIds = indivIds[i];
+                }
+                else{
+                    sqlListIds += indivIds[i] + ",";
+                }
+            }
+        }
+
+        String sqlQuery2 = "select count(*) from achievements where id in(" + sqlListIds + ") and completed=true";
+        Cursor cursor2 = database.rawQuery(sqlQuery2, null);
+        HashMap<String,String> countCompleted = new HashMap<String,String>();
+
+        if (cursor.moveToFirst()) {
+            do {
+
+                countCompleted.put("count", cursor.getString(0));
+
+
+            } while (cursor.moveToNext());
+        }
+
+        int countCompletedNumber = Integer.parseInt(countCompleted.get("count"));
+        int totalAchievements = 0;
+        try {
+            totalAchievements = indivIds.length;
+        }
+        catch(Exception e){
+
+        }
+        float percentCompleted = 0;
+        if(countCompletedNumber != 0 || totalAchievements != 0){
+            percentCompleted = countCompletedNumber / totalAchievements;
+        }
+
+        if(percentCompleted ==0){
+            return 0;
+        }
+        else if((percentCompleted * 100) < 50){
+            return 1;
+        }
+        else if((percentCompleted * 100)>= 50){
+            return 2;
+        }
+        else if((percentCompleted * 100)==100){
+            return 3;
+        }
+        else{
+            return -1;
+        }
+
+    }
     public void insertAchievement(HashMap<String, String> queryValues) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
