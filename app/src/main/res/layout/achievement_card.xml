@@ -1,58 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
     android:paddingBottom="20dp">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <EditText
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/tvTitle"
+        android:text="title"
+        android:textAlignment="gravity"
+        android:gravity="center_horizontal"
+        android:textSize="22sp"
+        android:textColor="#FFFFFF" />
 
-        <EditText
-            android:layout_width="match_parent"
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvDescription"
+        android:layout_gravity="center_horizontal"
+        android:background="#FFFFFF"
+        android:text="A bunch of random words that aren&apos;t too long of a sentence." />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:focusable="false"
+        android:background="#FFFFFF">
+
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvTitle"
-            android:text="title"
-            android:textAlignment="gravity"
-            android:gravity="center_horizontal"
-            android:textSize="22dp"
-            android:textColor="#FFFFFF" />
+            android:text="Complete"
+            android:id="@+id/btnComplete"
+            android:onClick="onAchievementViewClick" />
 
-        <EditText
-            android:layout_width="match_parent"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvDescription"
-            android:layout_gravity="center_horizontal"
-            android:background="#FFFFFF"
-            android:text="A bunch of random words that aren&apos;t too long of a sentence." />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:focusable="false"
-            android:background="#FFFFFF">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Complete"
-                android:id="@+id/btnComplete"
-                android:onClick="onAchievementViewClick" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Share"
-                android:id="@+id/btnShare"
-                android:onClick="onShareClick" />
-        </LinearLayout>
-
+            android:text="Share"
+            android:id="@+id/btnShare"
+            android:onClick="onShareClick" />
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

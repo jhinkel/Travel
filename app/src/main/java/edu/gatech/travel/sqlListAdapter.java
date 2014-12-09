@@ -19,9 +19,6 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
     private static class ViewHolder {
         TextView title;
         TextView description;
-        TextView latitude;
-        TextView longitude;
-        TextView achievementids;
     }
 
     @Override
@@ -35,9 +32,6 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
 
             viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.tvDescription);
-            viewHolder.latitude = (TextView) convertView.findViewById(R.id.tvLatitude);
-            viewHolder.longitude = (TextView) convertView.findViewById(R.id.tvLongitude);
-            viewHolder.achievementids = (TextView) convertView.findViewById(R.id.tvAchievements);
 
             convertView.setTag(viewHolder);
         } else {
@@ -49,9 +43,6 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
 
         viewHolder.title.setText(ListofLists2.get(position).get("title"));
         viewHolder.description.setText(ListofLists2.get(position).get("description"));
-        viewHolder.latitude.setText(ListofLists2.get(position).get("latitude"));
-        viewHolder.longitude.setText(ListofLists2.get(position).get("longitude"));
-        viewHolder.achievementids.setText(ListofLists2.get(position).get("achievements"));
 
         final String achievementIds = ListofLists2.get(position).get("achievements");
         android.view.View.OnClickListener yourClickListener = new android.view.View.OnClickListener() {
