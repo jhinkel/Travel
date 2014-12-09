@@ -2,6 +2,7 @@ package edu.gatech.travel;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -12,6 +13,10 @@ import android.widget.ListView;
 
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -22,10 +27,17 @@ import java.util.HashMap;
 //import java.util.HashMap;
 
 
-public class ViewIndividualList extends Activity {
+public class ViewIndividualList extends Activity implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener { //change string{
     achievementAdapter adapter;
     private UiLifecycleHelper uiHelper;
     DBController database = new DBController(this);
+    LocationClient myLocationClient;
+    double latitude;
+    double longitude;
+    private static final LocationRequest REQUEST = LocationRequest.create()
+            .setInterval(5000)         // 5 seconds
+            .setFastestInterval(16)    // 16ms = 60fps
+            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,10 @@ public class ViewIndividualList extends Activity {
         uiHelper = new UiLifecycleHelper(this, null);
         uiHelper.onCreate(savedInstanceState);
 
+        myLocationClient = new LocationClient(getApplicationContext(), this, this);
+        if(myLocationClient != null)
+            myLocationClient.connect();
+
         //Get the string of achievements from the intent, split it, and put it in an array.
         String achieveString = getIntent().getExtras().getString("Achievements");
         Log.e("achieveString",achieveString);
@@ -43,11 +59,10 @@ public class ViewIndividualList extends Activity {
             ArrayList<String> intentAchievements = new ArrayList<String>();
             intentAchievements.addAll(Arrays.asList(achievements));
 
-            adapter = new achievementAdapter(this, intentAchievements);
+            adapter = new achievementAdapter(this, intentAchievements, latitude, longitude);
 
             ListView x = (ListView) this.findViewById(R.id.list);
             x.setAdapter(adapter);
-
         }
         else{
             Log.e("EVENT FIRED ACHIEVEMENT!!!!", "EVENT FIRED");
@@ -162,6 +177,28 @@ public class ViewIndividualList extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onConnected(Bundle bundle) {
+        myLocationClient.requestLocationUpdates(REQUEST, this);
+
+    }
+    @Override
+    public void onDisconnected() {
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        adapter.notifyDataSetChanged();
+
+    }
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 }
 

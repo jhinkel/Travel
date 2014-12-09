@@ -21,23 +21,15 @@ import com.google.android.gms.location.LocationRequest;
 import android.location.LocationManager;
 
 
-public class achievementAdapter extends ArrayAdapter<String> implements GooglePlayServicesClient.ConnectionCallbacks, GooglePlayServicesClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener { //change string
+public class achievementAdapter extends ArrayAdapter<String> {
     private ArrayList<String> listItems;
-    LocationClient myLocationClient;
-    double latitude;
-    double longitude;
-    private static final LocationRequest REQUEST = LocationRequest.create()
-            .setInterval(5000)         // 5 seconds
-            .setFastestInterval(16)    // 16ms = 60fps
-            .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+    double latitude, longitude;
 
-    public achievementAdapter(Context context, ArrayList<String> listItems){
+    public achievementAdapter(Context context, ArrayList<String> listItems, double latitude, double longitude){
         super(context,R.layout.achievement_card,listItems);
         this.listItems = listItems;
-
-        myLocationClient = new LocationClient(getContext(), this, this);
-        if(myLocationClient != null)
-            myLocationClient.connect();
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     private static class ViewHolder {
@@ -82,7 +74,6 @@ public class achievementAdapter extends ArrayAdapter<String> implements GooglePl
         double myLong = Double.parseDouble(ListofLists2.get(index).get("longitude"));
         double achRadius = Double.parseDouble(ListofLists2.get(index).get("radius"));
         float results[] = {-1,-1,-1};
-        myLocationClient.connect();
         Location.distanceBetween(myLat, myLong, latitude, longitude, results);
 
         Log.e("MYLAT", Double.toString(myLat));
@@ -106,26 +97,5 @@ public class achievementAdapter extends ArrayAdapter<String> implements GooglePl
 
         //Return the view!
         return convertView;
-    }
-
-    public void onConnected(Bundle bundle) {
-        myLocationClient.requestLocationUpdates(REQUEST, this);
-
-    }
-    @Override
-    public void onDisconnected() {
-
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-
-    }
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 }
