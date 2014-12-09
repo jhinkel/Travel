@@ -1,6 +1,7 @@
 package edu.gatech.travel;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
@@ -59,7 +61,7 @@ public class ViewIndividualList extends Activity implements GooglePlayServicesCl
             ArrayList<String> intentAchievements = new ArrayList<String>();
             intentAchievements.addAll(Arrays.asList(achievements));
 
-            adapter = new achievementAdapter(this, intentAchievements, latitude, longitude);
+            adapter = new achievementAdapter(this, intentAchievements);
 
             ListView x = (ListView) this.findViewById(R.id.list);
             x.setAdapter(adapter);
@@ -68,7 +70,11 @@ public class ViewIndividualList extends Activity implements GooglePlayServicesCl
             Log.e("EVENT FIRED ACHIEVEMENT!!!!", "EVENT FIRED");
         }
     }
-
+    private void toast(String text){
+        Context context = getApplicationContext();
+        Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+        toast.show();
+    }
     String achievementTitle = "";
     public void onShareClick(View v){
         View parentView = (View) v.getParent().getParent();
@@ -109,7 +115,7 @@ public class ViewIndividualList extends Activity implements GooglePlayServicesCl
 // Http Request Params Object
         RequestParams params = new RequestParams();
         params.put("title",listvals.get("title"));
-        params.put("description",listvals.get("description"));
+        params.put("description", listvals.get("description"));
         client.post("http://www.johnhinkel.com/sqlitemysqlsync/updateAchievementCompleted.php", params, new AsyncHttpResponseHandler() {
         });
     }
@@ -193,6 +199,7 @@ public class ViewIndividualList extends Activity implements GooglePlayServicesCl
 
         latitude = location.getLatitude();
         longitude = location.getLongitude();
+        adapter.setLatLong(latitude,longitude);
         adapter.notifyDataSetChanged();
 
     }

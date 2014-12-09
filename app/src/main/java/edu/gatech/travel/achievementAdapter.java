@@ -25,13 +25,15 @@ public class achievementAdapter extends ArrayAdapter<String> {
     private ArrayList<String> listItems;
     double latitude, longitude;
 
-    public achievementAdapter(Context context, ArrayList<String> listItems, double latitude, double longitude){
+    public achievementAdapter(Context context, ArrayList<String> listItems){
         super(context,R.layout.achievement_card,listItems);
         this.listItems = listItems;
-        this.latitude = latitude;
-        this.longitude = longitude;
-    }
 
+    }
+    public void setLatLong(double latitude,double longitude){
+        this.latitude=latitude;
+        this.longitude=longitude;
+    }
     private static class ViewHolder {
         TextView title;
         TextView description;
