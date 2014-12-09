@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
     private static class ViewHolder {
         TextView title;
         TextView description;
+        ImageView image;
     }
 
     @Override
@@ -32,6 +34,7 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
 
             viewHolder.title = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.description = (TextView) convertView.findViewById(R.id.tvDescription);
+            viewHolder.image = (ImageView) convertView.findViewById(R.id.ivImage);
 
             convertView.setTag(viewHolder);
         } else {
@@ -43,6 +46,23 @@ public class sqlListAdapter extends ArrayAdapter<HashMap<String,String>>{ //chan
 
         viewHolder.title.setText(ListofLists2.get(position).get("title"));
         viewHolder.description.setText(ListofLists2.get(position).get("description"));
+
+        int star = database.getAchievementCount(ListofLists2.get(position));
+
+        if (star == 1)
+        {
+            viewHolder.image.setImageResource(R.drawable.bronzestar);
+        }
+
+        else if (star == 2)
+        {
+            viewHolder.image.setImageResource(R.drawable.silverstar);
+        }
+        else if (star == 3)
+        {
+            viewHolder.image.setImageResource(R.drawable.goldstar);
+        }
+
 
         final String achievementIds = ListofLists2.get(position).get("achievements");
         android.view.View.OnClickListener yourClickListener = new android.view.View.OnClickListener() {

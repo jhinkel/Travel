@@ -60,9 +60,11 @@ public class ViewIndividualList extends Activity {
         EditText id = (EditText) parentView.findViewById(R.id.tvTitle);
         achievementTitle = id.getText().toString();
         FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(this)
-                .setLink("www.Google.com")
+                .setLink("http://fc00.deviantart.net/fs70/i/2010/333/9/a/abe_lincoln_riding_a_grizzly_by_sharpwriter-d33u2nl.png")
+                .setPicture("http://fc00.deviantart.net/fs70/i/2010/333/9/a/abe_lincoln_riding_a_grizzly_by_sharpwriter-d33u2nl.png")
+                .setCaption("Abraham Lincoln- Father of the Internet")
                 .setName(achievementTitle)
-                .setDescription("I completed the \"" + achievementTitle + "\" achievement!")
+                .setDescription("I completed the \"" + achievementTitle + "\" achievement!\nMan it's hard to be awesome.")
                 .build();
         uiHelper.trackPendingDialogCall(shareDialog.present());
     }
