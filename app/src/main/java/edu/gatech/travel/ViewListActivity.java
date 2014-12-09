@@ -13,11 +13,9 @@ import java.util.HashMap;
 
 
 public class ViewListActivity extends Activity {
-
     DBController controller = new DBController(this);
-    ArrayList<HashMap<String,String>> listItems=new ArrayList<HashMap<String,String>>();
+    ArrayList<HashMap<String,String>> listItems = new ArrayList<HashMap<String,String>>();
     sqlListAdapter adapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
