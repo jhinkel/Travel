@@ -38,14 +38,16 @@
             android:layout_height="wrap_content"
             android:text="Complete"
             android:id="@+id/btnComplete"
-            android:onClick="onCompleteClick" />
+            android:onClick="onCompleteClick"
+            android:enabled="true" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Share"
             android:id="@+id/btnShare"
-            android:onClick="onShareClick" />
+            android:onClick="onShareClick"
+            android:enabled="true" />
     </LinearLayout>
 
 </LinearLayout>

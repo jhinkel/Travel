@@ -117,7 +117,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         String sqlQuery2 = "select count(*) from achievements where id in(" + sqlListIds + ") and completed=1";
         Cursor cursor2 = database.rawQuery(sqlQuery2, null);
         HashMap<String,String> countCompleted = new HashMap<String,String>();
-
+        Log.e("SQLQUERY2",sqlQuery2);
         if (cursor2.moveToFirst()) {
             do {
 
@@ -167,6 +167,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         values.put("latitude", queryValues.get("latitude").toString());
         values.put("longitude", queryValues.get("longitude").toString());
         values.put("radius", queryValues.get("radius").toString());
+        values.put("completed",queryValues.get("completed").toString());
 
         database.insert("achievements", null, values);
         database.close();
@@ -287,6 +288,12 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
                 map.put("latitude", obj.get("latitude").toString());
                 map.put("longitude", obj.get("longitude").toString());
                 map.put("radius", obj.get("radius").toString());
+                if(obj.get("completed").toString().equals("yes")) {
+                    map.put("completed", "1");
+                }
+                else{
+                    map.put("completed","0");
+                }
                 ListofLists.add(map);
 
             }

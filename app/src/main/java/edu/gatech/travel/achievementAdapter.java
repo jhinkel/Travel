@@ -3,6 +3,7 @@ package edu.gatech.travel;
 import android.content.Context;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,22 +78,30 @@ public class achievementAdapter extends ArrayAdapter<String> implements GooglePl
         viewHolder.description.setText(ListofLists2.get(index).get("description"));
 
         //Set code for buttons!
-        if (ListofLists2.get(index).get("achievement").equals("1"))
+        double myLat = Double.parseDouble(ListofLists2.get(index).get("latitude"));
+        double myLong = Double.parseDouble(ListofLists2.get(index).get("longitude"));
+        double achRadius = Double.parseDouble(ListofLists2.get(index).get("radius"));
+        float results[] = {-1,-1,-1};
+        myLocationClient.connect();
+        Location.distanceBetween(myLat, myLong, latitude, longitude, results);
+
+        Log.e("MYLAT", Double.toString(myLat));
+        Log.e("MYLON", Double.toString(myLong));
+        Log.e("latitude", Double.toString(latitude));
+        Log.e("longitude", Double.toString(longitude));
+
+
+
+        viewHolder.onComplete.setEnabled(false);
+
+        if (ListofLists2.get(index).get("completed").equals("1"))
         {
             viewHolder.onShare.setEnabled(true);
         } else {
             viewHolder.onShare.setEnabled(false);
-        }
-
-        double myLat = Double.parseDouble(ListofLists2.get(index).get("latitude"));
-        double myLong = Double.parseDouble(ListofLists2.get(index).get("longitude"));
-        double achRadius = Double.parseDouble(ListofLists2.get(index).get("radius"));
-
-
-        if (achRadius > Math.sqrt((myLat - latitude) * (myLat - latitude) + (myLong - longitude) * (myLong - longitude))) {
-            viewHolder.onComplete.setEnabled(true);
-        } else {
-            viewHolder.onShare.setEnabled(false);
+            if (achRadius > results[0]) {
+                viewHolder.onComplete.setEnabled(true);
+            }
         }
 
         //Return the view!
@@ -110,6 +119,7 @@ public class achievementAdapter extends ArrayAdapter<String> implements GooglePl
 
     @Override
     public void onLocationChanged(Location location) {
+
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
