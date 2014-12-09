@@ -109,22 +109,22 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
                     sqlListIds = indivIds[i];
                 }
                 else{
-                    sqlListIds += indivIds[i] + ",";
+                    sqlListIds += "," + indivIds[i];
                 }
             }
         }
 
-        String sqlQuery2 = "select count(*) from achievements where id in(" + sqlListIds + ") and completed=true";
+        String sqlQuery2 = "select count(*) from achievements where id in(" + sqlListIds + ") and completed=1";
         Cursor cursor2 = database.rawQuery(sqlQuery2, null);
         HashMap<String,String> countCompleted = new HashMap<String,String>();
 
-        if (cursor.moveToFirst()) {
+        if (cursor2.moveToFirst()) {
             do {
 
-                countCompleted.put("count", cursor.getString(0));
+                countCompleted.put("count", cursor2.getString(0));
 
 
-            } while (cursor.moveToNext());
+            } while (cursor2.moveToNext());
         }
 
         int countCompletedNumber = Integer.parseInt(countCompleted.get("count"));
@@ -139,7 +139,7 @@ public class DBController  extends SQLiteOpenHelper implements AsyncResponse, As
         if(countCompletedNumber != 0 || totalAchievements != 0){
             percentCompleted = countCompletedNumber / totalAchievements;
         }
-
+        Log.e("percentCompleted",Float.toString(percentCompleted));
         if(percentCompleted ==0){
             return 0;
         }
