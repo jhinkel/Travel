@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Complete"
             android:id="@+id/btnComplete"
-            android:onClick="onAchievementViewClick" />
+            android:onClick="onCompleteClick" />
 
         <Button
             android:layout_width="wrap_content"

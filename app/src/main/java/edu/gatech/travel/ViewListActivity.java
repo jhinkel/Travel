@@ -1,13 +1,11 @@
 package edu.gatech.travel;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -26,25 +24,11 @@ public class ViewListActivity extends Activity {
         super.onCreate(savedInstanceState);
         adapter=new sqlListAdapter(this, listItems);
         setContentView(R.layout.activity_view_list);
-        //DBController database = new DBController(this); LEGACY CODE?
         ListView x = (ListView) this.findViewById(R.id.list);
         x.setAdapter(adapter);
 
         listItems = controller.getAllLists();
         adapter.addAll(listItems);
-        /*
-        x.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,
-                                    long id) {
-                String achievementIds = listItems.get(position).get("achievementids");
-
-                Intent intent = new Intent(getApplicationContext(),ViewIndividualList.class);
-                intent.putExtra("Achievements", achievementIds);
-                startActivity(intent);
-            }
-        });*/
-
     }
 
     @Override
@@ -70,8 +54,5 @@ public class ViewListActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    public void onAchievementViewClick(View v){
-
     }
 }

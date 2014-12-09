@@ -12,17 +12,20 @@ import android.widget.ListView;
 
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 //import java.util.HashMap;
 
 
 public class ViewIndividualList extends Activity {
-    //ArrayList<String> listItems=new ArrayList<String>();
     achievementAdapter adapter;
     private UiLifecycleHelper uiHelper;
-    //DBController controller = new DBController(this);
+    DBController database = new DBController(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +43,11 @@ public class ViewIndividualList extends Activity {
             ArrayList<String> intentAchievements = new ArrayList<String>();
             intentAchievements.addAll(Arrays.asList(achievements));
 
-
             adapter = new achievementAdapter(this, intentAchievements);
 
-            //DBController database = new DBController(this);
             ListView x = (ListView) this.findViewById(R.id.list);
             x.setAdapter(adapter);
 
-            //listItems.addAll(achievements);
         }
         else{
             Log.e("EVENT FIRED ACHIEVEMENT!!!!", "EVENT FIRED");
@@ -68,6 +68,37 @@ public class ViewIndividualList extends Activity {
                 .build();
         uiHelper.trackPendingDialogCall(shareDialog.present());
     }
+
+    public void onCompleteClick(View v) {
+        View parentView = (View) v.getParent().getParent();
+        EditText id = (EditText) parentView.findViewById(R.id.tvTitle);
+        achievementTitle = id.getText().toString();
+
+        ArrayList<HashMap<String,String>> listAchievements = new ArrayList<HashMap<String,String>>();
+        listAchievements = database.getAllAchievements();
+
+        int position = 0;
+        while(!listAchievements.get(position).get("title").equals(achievementTitle) && position < listAchievements.size()) {
+            position++;
+        }
+
+        database.UpdateCompleted(listAchievements.get(position));
+        updateCompletedServer(listAchievements.get(position));
+
+        adapter.notifyDataSetChanged();
+    }
+
+    public void updateCompletedServer( HashMap<String, String> listvals) {
+        // Create AsycHttpClient object
+        AsyncHttpClient client = new AsyncHttpClient();
+// Http Request Params Object
+        RequestParams params = new RequestParams();
+        params.put("title",listvals.get("title"));
+        params.put("description",listvals.get("description"));
+        client.post("http://www.johnhinkel.com/sqlitemysqlsync/updateAchievementCompleted.php", params, new AsyncHttpResponseHandler() {
+        });
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
